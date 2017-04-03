@@ -207,17 +207,17 @@ bpkg_install_from_remote () {
   local git_remote=$3
   local let needs_global=$4
 
-  local cwd=$(pwd)
-  local url=''
-  local uri=''
-  local version=''
-  local status=''
-  local json=''
-  local user=''
-  local name=''
-  local version=''
   local auth_param=''
+  local cwd=$(pwd)
+  local json=''
   local let has_pkg_json=1
+  local name=''
+  local status=''
+  local uri=''
+  local url=''
+  local user=''
+  local version=''
+
   declare -a local pkg_parts=()
   declare -a local remote_parts=()
   declare -a local scripts=()
