@@ -209,6 +209,8 @@ bpkg_install_from_remote () {
 
   local auth_param=''
   local cwd=$(pwd)
+  local deps_dir_name='deps'
+  local deps_dir="${cwd}/${deps_dir_name}"
   local json=''
   local let has_pkg_json=1
   local name=''
@@ -404,16 +406,16 @@ bpkg_install_from_remote () {
   ## perform local install otherwise
   else
     ## copy package.json over
-    save_remote_file "${url}/package.json" "${cwd}/deps/${name}/package.json" "${auth_param}"
+    save_remote_file "${url}/package.json" "${deps_dir}/${name}/package.json" "${auth_param}"
 
     ## make 'deps/' directory if possible
-    mkdir -p "${cwd}/deps/${name}"
+    mkdir -p "${deps_dir}/${name}"
 
     ## make 'deps/bin' directory if possible
-    mkdir -p "${cwd}/deps/bin"
+    mkdir -p "${deps_dir}/bin"
 
     # install package dependencies
-    (cd "${cwd}/deps/${name}" && bpkg getdeps)
+    (cd "${deps_dir}/${name}" && bpkg getdeps)
 
     if [[ "${#scripts[@]}" -gt '0' ]]; then
       ## grab each script and place in deps directory
@@ -422,12 +424,12 @@ bpkg_install_from_remote () {
           local script="$(echo ${scripts[$i]} | xargs basename )"
           if [[ "${script}" ]];then
             info "fetch" "${url}/${script}"
-            info "write" "${cwd}/deps/${name}/${script}"
-            save_remote_file "${url}/${script}" "${cwd}/deps/${name}/${script}" "${auth_param}"
+            info "write" "${deps_dir}/${name}/${script}"
+            save_remote_file "${url}/${script}" "${deps_dir}/${name}/${script}" "${auth_param}"
             local scriptname="${script%.*}"
-            info "${scriptname} to PATH" "${cwd}/deps/bin/${scriptname}"
-            ln -si "${cwd}/deps/${name}/${script}" "${cwd}/deps/bin/${scriptname}"
-            chmod u+x "${cwd}/deps/bin/${scriptname}"
+            info "${scriptname} to PATH" "${deps_dir}/bin/${scriptname}"
+            ln -si "${deps_dir}/${name}/${script}" "${deps_dir}/bin/${scriptname}"
+            chmod u+x "${deps_dir}/bin/${scriptname}"
           fi
         )
       done
@@ -438,7 +440,7 @@ bpkg_install_from_remote () {
         (
           local file="${files[$i]}"
           if [[ "${file}" ]];then
-            local filedir="$(dirname "${cwd}/deps/${name}/${file}")"
+            local filedir="$(dirname "${deps_dir}/${name}/${file}")"
             info "fetch" "${url}/${file}"
             if [[ ! -d "${filedir}" ]]; then
               mkdir -p "${filedir}"
