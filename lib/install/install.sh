@@ -81,7 +81,6 @@ info () {
   message 'cyan' "${title}" "${@}"
 }
 
-
 save_remote_file () {
   local auth_param path url
 
@@ -208,9 +207,9 @@ bpkg_install_from_remote () {
   local let needs_global=$4
 
   local auth_param=''
-  local cwd=$(pwd)
+  local cwd="$(pwd)"
   local deps_dir_name='deps'
-  local deps_dir="${cwd}/${deps_dir_name}"
+  local deps_dir="${BPKG_DIR:-${cwd}}/${deps_dir_name}"
   local json=''
   local let has_pkg_json=1
   local name=''

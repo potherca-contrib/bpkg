@@ -11,7 +11,8 @@ usage () {
 bpkg_package () {
   local prop="${1}"
   local cwd="$(pwd)"
-  local pkg="${cwd}/package.json"
+  local bpkg_dir="${BPKG_DIR:-${cwd}}/"
+  local pkg="${bpkg_dir}/package.json"
 
   ## parse flags
   case "${prop}" in
@@ -23,7 +24,7 @@ bpkg_package () {
 
   ## ensure there is a package to read
   if ! test -f "${pkg}"; then
-    echo 2>&1 "error: Unable to find \`package.json' in $(pwd)"
+    echo 2>&1 "error: Unable to find \`package.json' in ${bpkg_dir}"
     return 1
   fi
 

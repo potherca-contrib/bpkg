@@ -10,7 +10,8 @@ usage () {
 ## Read a package property
 bpkg_getdeps () {
   local cwd="$(pwd)"
-  local pkg="${cwd}/package.json"
+  local bpkg_dir="${BPKG_DIR:-${cwd}}/"
+  local pkg="${bpkg_dir}/package.json"
 
   ## parse flags
   case "$1" in
@@ -22,7 +23,7 @@ bpkg_getdeps () {
 
   ## ensure there is a package to read
   if ! test -f "${pkg}"; then
-    echo 2>&1 "error: Unable to find \`package.json' in $(pwd)"
+    echo 2>&1 "error: Unable to find \`package.json' in ${bpkg_dir}"
     return 1
   fi
 
