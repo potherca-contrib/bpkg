@@ -189,3 +189,4 @@ if ([ "$0" = "$BASH_SOURCE" ] || ! [ -n "$BASH_SOURCE" ]);
 then
   tokenize | parse
 fi
+

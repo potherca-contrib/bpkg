@@ -191,3 +191,4 @@ if [[ ${BASH_SOURCE[0]} != $0 ]]; then
 elif bpkg_validate; then
   bpkg_show "${@}"
 fi
+

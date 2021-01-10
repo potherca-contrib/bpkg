@@ -51,3 +51,4 @@ else
   bpkg_package "${@}"
   exit $?
 fi
+

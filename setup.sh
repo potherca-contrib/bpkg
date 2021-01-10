@@ -110,3 +110,4 @@ make_unlink () {
 ## go
 [ $# -eq 0 ] && setup || make_$1
 exit $?
+
