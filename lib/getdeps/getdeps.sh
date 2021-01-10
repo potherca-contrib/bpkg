@@ -45,3 +45,4 @@ else
   bpkg_getdeps "${@}"
   exit $?
 fi
+
