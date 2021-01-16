@@ -13,7 +13,7 @@ on:
   - pull_request
 
 jobs:
-  allowed_to_fail:
+  shellcheck:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -21,28 +21,14 @@ jobs:
         file:
           - bpkg.sh
           - setup.sh
+          - lib/getdeps/getdeps.sh
           - lib/init/init.sh
           - lib/install/install.sh
           - lib/json/JSON.sh
-          - lib/suggest/suggest.sh
-    steps:
-      - uses: actions/checkout@v2
-      - uses: pipeline-components/shellcheck@v0.6.1
-        continue-on-error: true
-        with:
-          directory: ${{ matrix.file }}
-          options: -f gcc -x lib/utils/utils.sh
-
-  must_pass:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        file:
-          - lib/getdeps/getdeps.sh
           - lib/list/list.sh
           - lib/package/package.sh
           - lib/show/show.sh
+          - lib/suggest/suggest.sh
           - lib/term/term.sh
           - lib/update/update.sh
           - lib/utils/utils.sh
